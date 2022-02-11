@@ -1,0 +1,12 @@
+Interface'lere yerleþtirilmesi gereken garanti etiketler.
+
+// #STRN_VRSC	Payloadýn þifrelenip yerleþtirildiði string.
+// #COMP_CODE	Payloadý çözüp compile eden kod.
+// #RUNN_PROC	Process çalýþtýrma
+// #DECR_CODE	Þifreli metini çözmek için kod.
+// #ENCR_CODE	Herhangi bir veriyi þifrelemek için kod.
+
+Payload ve Interfacelere yerleþtirilmesi gereken garanti etiketler
+
+// #NRUN_VMAC	Anti-Sanal Makine Kodu. 
+		Main yada Show metodlarýna yerleþtirin.
