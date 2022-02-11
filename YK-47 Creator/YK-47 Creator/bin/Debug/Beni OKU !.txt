@@ -6,7 +6,7 @@ Interface'lere yerleþtirilmesi gereken garanti etiketler.
 // #DECR_CODE	Þifreli metini çözmek için kod.
 // #ENCR_CODE	Herhangi bir veriyi þifrelemek için kod.
 
-Payload ve Interfacelere yerleþtirilmesi gereken garanti etiketler
+Payload ve Interfacelere isteðe baðlý yerleþtirilebilir etiketler
 
 // #NRUN_VMAC	Anti-Sanal Makine Kodu. 
 		Main yada Show metodlarýna yerleþtirin.
